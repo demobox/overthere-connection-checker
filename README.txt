@@ -36,12 +36,12 @@ java -jar overthere-connection-checker.jar [options...] arguments...
 Examples
 ========
 
-*	java -jar overthere-connection-checker.jar -address apache-22 -connectionType SSH_SCP -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo
+*	java -jar overthere-connection-checker.jar -address apache-22 -protocol SSH_SCP -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo
 
-*	java -jar overthere-connection-checker.jar -address apache-22 -connectionType SSH_SUDO -username deployit -password deployit
+*	java -jar overthere-connection-checker.jar -address apache-22 -protocol SSH_SUDO -username deployit -password deployit
 
-*	java -jar overthere-connection-checker.jar -address apache-22 -connectionType SSH_SUDO -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo -sudouser groovy 
+*	java -jar overthere-connection-checker.jar -address apache-22 -protocol SSH_SUDO -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo -sudouser groovy 
 
 NOTE: This will only work with NOPASSWD!
 
-*	java -jar overthere-connection-checker.jar -address apache-22 -connectionType SSH_SUDO -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo -sudouser groovy -password deployit
+*	java -jar overthere-connection-checker.jar -address apache-22 -protocol SSH_SUDO -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo -sudouser groovy -password deployit
