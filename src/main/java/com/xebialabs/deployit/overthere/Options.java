@@ -40,7 +40,7 @@ public class Options {
     @Option(name = "-keypass", usage = "The password to use to connect to the target machine (if not using SSH keys)")
     public String keypass;
 
-    @Option(name = "-sudouser", usage = "For connection type ssh_sudo, the user to use for command execution (sudo -u <user> ...)")
+    @Option(name = "-sudouser", usage = "For connection type SSH_SUDO, the user to use for command execution (sudo -u <user> ...)")
     public String sudoUsername;
 
     @Option(name = "-tmpdir", usage = "The temporary directory to use for session work files (default '/tmp' on UNIX, 'C:\\windows\\temp' on Windows)")
@@ -55,12 +55,12 @@ public class Options {
             }
 
             if ((protocol == SSH_SUDO) && StringUtils.isEmpty(sudoUsername)) {
-                errors.add("'-sudouser' is required for ssh_sudo connections");
+                errors.add("'-sudouser' is required for SSH_SUDO connections");
             }
         } else {
             // cifs_telnet or cifs_winrm
             if (StringUtils.isEmpty(password)) {
-                errors.add("'-password' is required for cifs_telnet or cifs_winrm connections");
+                errors.add("'-password' is required for CIFS_TELNET or CIFS_WINRM connections");
             }
         }
         return errors;
