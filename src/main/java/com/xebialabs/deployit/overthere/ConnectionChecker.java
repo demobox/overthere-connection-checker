@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.xebialabs.deployit.overthere.step.ConnectionCheckStep;
-import com.xebialabs.deployit.overthere.util.ProtocolInjector;
 import com.xebialabs.overthere.ConnectionOptions;
 
 public class ConnectionChecker implements Runnable {
@@ -35,7 +34,6 @@ public class ConnectionChecker implements Runnable {
 
     @Override
     public void run() {
-        ProtocolInjector.populateProtocolMap();
         executeConnectionCheck();
 
         // also try interactive SUDO
