@@ -31,7 +31,7 @@ task jarWithDeps(type: Jar, dependsOn: classes) {
 	mergeDir = "${buildDir}/merge"
 	truezipSpiFile = 'META-INF/services/de.schlichtherle.truezip.fs.spi.FsDriverService'
 	// no inheritance from other projects so no need to be lazy here
-	compileDeps = configurations.compile.collect { zipTree(it) }
+	compileDeps = configurations.runtime.collect { zipTree(it) }
 
 	doFirst {
 		new File(mergeDir).delete()
