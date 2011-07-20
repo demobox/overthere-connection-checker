@@ -31,16 +31,16 @@ task jarWithDeps(type: Jar, dependsOn: classes) {
 	mergeDir = "${buildDir}/merge"
 	truezipSpiFile = 'META-INF/services/de.schlichtherle.truezip.fs.spi.FsDriverService'
 	// no inheritance from other projects so no need to be lazy here
-	compileDeps = configurations.runtime.collect { zipTree(it) }
+	runtimeDeps = configurations.runtime.collect { zipTree(it) }
 
 	doFirst {
 		new File(mergeDir).delete()
-		mergeFiles(mergeDir, compileDeps, truezipSpiFile)
+		mergeFiles(mergeDir, runtimeDeps, truezipSpiFile)
 	}
 
 	// this project's classes and all deps
 	from sourceSets*.classesDir
-	from(compileDeps) {
+	from(runtimeDeps) {
 		exclude 'META-INF/*'
 		exclude truezipSpiFile
 	}
