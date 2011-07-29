@@ -14,7 +14,10 @@
     <File>connection-check.log</File>
   </appender>
   
-  <logger name="com.xebialabs.deployit.hostsession" level="debug" additivity="false">
+  <logger name="com.xebialabs.overthere" level="debug" additivity="false">
+    <appender-ref ref="FILE" />
+  </logger>
+  <logger name="com.xebialabs.deployit.overthere" level="debug" additivity="false">
     <appender-ref ref="FILE" />
   </logger>
   <logger name="com.xebialabs.deployit" level="info" />
