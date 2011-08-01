@@ -52,7 +52,7 @@ public class ConnectionChecker implements Runnable {
 
     private void executeConnectionCheck() {
         logger.info(String.format("Checking connection to host '%s' (OS '%s') using connection type '%s'",
-                options.get(ADDRESS), options.get(OPERATING_SYSTEM), protocol));
+                options.get(ADDRESS), options.get(OPERATING_SYSTEM), options.get(CONNECTION_TYPE)));
 
         new ConnectionCheckStep(protocol, options).execute(loggingHandler(logger));
     }
