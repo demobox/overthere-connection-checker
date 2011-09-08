@@ -57,7 +57,7 @@ public class ConnectionCheckStep {
                 OverthereFile fileToUpload = uploadFile(connection);
                 tryCanGetFilePermissions(connection, fileToUpload);
             } finally {
-                connection.disconnect();
+                connection.close();
             }
         } catch (Exception exc) {
             handler.handleErrorLine(format("Connection test to host " + options.get(ADDRESS) + " failed. Please check address, username and password. Exception message is: %s", exc));
