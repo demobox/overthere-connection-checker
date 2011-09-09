@@ -7,12 +7,13 @@ apply plugin: 'maven'
 
 group = 'com.xebialabs.deployit'
 version = '1.1-SNAPSHOT'
+overthereVersion = '1.0'
 
 sourceCompatibility = 1.6
 sourceEncoding = 'UTF-8'
 
 dependencies {
-  compile('com.xebialabs.overthere:overthere:1.0-alpha-20') {
+  compile("com.xebialabs.overthere:overthere:${overthereVersion}") {
     // the 2.6.1 version contains a corrupt class file
     exclude group: 'com.ibm.icu', module: 'icu4j'
   }
