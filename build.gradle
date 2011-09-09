@@ -23,11 +23,11 @@ dependencies {
   testCompile 'junit:junit:4.8.2'
 }
 
-localNexusBaseUrl = 'http://localhost:8081/nexus/content'
+mavenProxyBaseUrl = 'http://localhost:8081/nexus/content'
 
 repositories {
 	mavenLocal()
-	mavenRepo urls: "${localNexusBaseUrl}/groups/public/"
+	mavenRepo urls: "${mavenProxyBaseUrl}/groups/public/"
 }
 
 task jarWithDeps(type: Jar, dependsOn: classes) {
