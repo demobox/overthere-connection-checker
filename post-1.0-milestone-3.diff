@@ -1,0 +1,22 @@
+diff --git a/build.gradle b/build.gradle
+index e9bcca9..971d7c3 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -41,7 +41,7 @@ task jarWithDeps(type: Jar, dependsOn: classes) {
+ 	}
+ 
+ 	// this project's classes and all deps
+-	from sourceSets*.classesDir
++	from sourceSets*.output.classesDir
+ 	from(runtimeDeps) {
+ 		exclude 'META-INF/*'
+ 		exclude truezipSpiFile
+@@ -64,7 +64,7 @@ private def mergeFiles(targetDir, fileTrees, relativePath) {
+ }
+ 
+ afterEvaluate { eachProject ->
+-  Set testTasks = eachProject.tasks.withType(Test).all
++  Set testTasks = eachProject.tasks.withType(Test)
+   
+   testTasks.each { testTask ->
+     testTask.onlyIf { !project.hasProperty('skipTests') }

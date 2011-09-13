@@ -1,6 +1,6 @@
 /*
- * IMPORTANT: If using Gradle version 1.0-milestone-3 or earlier, please apply
- *            'pre-1.0-milestone-4.diff' using 'git apply pre-1.0-milestone-4.diff'
+ * IMPORTANT: If using Gradle version 1.0-milestone-4 or later, please apply
+ *            'post-1.0-milestone-3.diff' using 'git apply post-1.0-milestone-3.diff'
  */
 apply plugin: 'java'
 apply plugin: 'maven'
@@ -41,7 +41,7 @@ task jarWithDeps(type: Jar, dependsOn: classes) {
 	}
 
 	// this project's classes and all deps
-	from sourceSets*.output.classesDir
+	from sourceSets*.classesDir
 	from(runtimeDeps) {
 		exclude 'META-INF/*'
 		exclude truezipSpiFile
@@ -64,7 +64,7 @@ private def mergeFiles(targetDir, fileTrees, relativePath) {
 }
 
 afterEvaluate { eachProject ->
-  Set testTasks = eachProject.tasks.withType(Test)
+  Set testTasks = eachProject.tasks.withType(Test).all
   
   testTasks.each { testTask ->
     testTask.onlyIf { !project.hasProperty('skipTests') }
