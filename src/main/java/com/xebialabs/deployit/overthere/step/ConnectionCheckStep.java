@@ -27,6 +27,7 @@
 
 package com.xebialabs.deployit.overthere.step;
 
+import static com.google.common.base.Throwables.getStackTraceAsString;
 import static com.xebialabs.overthere.ConnectionOptions.ADDRESS;
 import static com.xebialabs.overthere.ConnectionOptions.TEMPORARY_DIRECTORY_PATH;
 import static com.xebialabs.overthere.OperatingSystemFamily.UNIX;
@@ -60,7 +61,8 @@ public class ConnectionCheckStep {
                 connection.close();
             }
         } catch (Exception exc) {
-            handler.handleErrorLine(format("Connection test to host " + options.get(ADDRESS) + " failed. Please check address, username and password. Exception message is: %s", exc));
+            handler.handleErrorLine(format("Connection test to host " + options.get(ADDRESS) + " failed. Please check address, username and password. Exception message is: %s%n%s", 
+                    exc, getStackTraceAsString(exc)));
             return false;
         }
         handler.handleOutputLine("Connection test to host " + options.get(ADDRESS) + " succeeded");
