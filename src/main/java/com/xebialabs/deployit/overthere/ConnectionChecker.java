@@ -1,13 +1,9 @@
 package com.xebialabs.deployit.overthere;
 
-import static com.xebialabs.deployit.overthere.Protocol.SSH_SUDO;
 import static com.xebialabs.overthere.ConnectionOptions.ADDRESS;
 import static com.xebialabs.overthere.ConnectionOptions.OPERATING_SYSTEM;
-import static com.xebialabs.overthere.ConnectionOptions.PASSWORD;
 import static com.xebialabs.overthere.ssh.SshConnectionBuilder.CONNECTION_TYPE;
-import static com.xebialabs.overthere.ssh.SshConnectionType.INTERACTIVE_SUDO;
 import static com.xebialabs.overthere.util.LoggingOverthereProcessOutputHandler.loggingHandler;
-import static org.apache.commons.lang.StringUtils.isEmpty;
 
 import java.util.Set;
 
@@ -35,18 +31,6 @@ public class ConnectionChecker implements Runnable {
     @Override
     public void run() {
         executeConnectionCheck();
-
-        // also try interactive SUDO
-        if (protocol.equals("ssh") && options.get(CONNECTION_TYPE).equals(SSH_SUDO)) {
-            options.get(CONNECTION_TYPE).equals(INTERACTIVE_SUDO);
-
-            if (isEmpty((String) options.get(PASSWORD))) {
-                logger.warn("***** WARNING: Without a password, sudo connections will only work correctly if the connecting user has NOPASSWD rights. Should a 'Sorry, try again' prompt (or similar) be displayed, please abort the connection from the target machine. *****");
-            }
-
-            executeConnectionCheck();
-        }
-
         logger.info("Completed connection check");
     }
 

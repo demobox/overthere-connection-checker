@@ -1,9 +1,14 @@
 package com.xebialabs.deployit.overthere;
 
 import static com.xebialabs.overthere.ConnectionOptions.TEMPORARY_DIRECTORY_PATH;
+import static com.xebialabs.overthere.ssh.SshConnectionBuilder.ALLOCATE_DEFAULT_PTY;
+import static com.xebialabs.overthere.ssh.SshConnectionBuilder.CONNECTION_TYPE;
 import static com.xebialabs.overthere.ssh.SshConnectionBuilder.PASSPHRASE;
 import static com.xebialabs.overthere.ssh.SshConnectionBuilder.PRIVATE_KEY_FILE;
+import static com.xebialabs.overthere.ssh.SshConnectionType.INTERACTIVE_SUDO;
+import static com.xebialabs.overthere.ssh.SshConnectionType.SUDO;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
@@ -96,6 +101,54 @@ public class OptionsTest {
         options.temporaryDirectoryLocation = tmpdir;
 
         assertEquals(tmpdir, options.toConnectionOptions().get(TEMPORARY_DIRECTORY_PATH));
+    }
+
+    @Test
+    public void usesSudoIfSudoDoesNotRequirePass() {
+        Options options = new Options();
+        options.protocol = Protocol.SSH_SUDO;
+        options.username = "jbond";
+        options.password = "secret";
+        options.sudoUsername = "M";
+        options.sudoRequiresPassword = false;
+
+        assertEquals(SUDO, options.toConnectionOptions().get(CONNECTION_TYPE));
+    }
+
+    @Test
+    public void usesInteractiveSudoIfSudoRequiresPass() {
+        Options options = new Options();
+        options.protocol = Protocol.SSH_SUDO;
+        options.username = "jbond";
+        options.password = "secret";
+        options.sudoUsername = "M";
+        options.sudoRequiresPassword = true;
+
+        assertEquals(INTERACTIVE_SUDO, options.toConnectionOptions().get(CONNECTION_TYPE));
+    }
+
+    @Test
+    public void allocatePtyArgIsHonoured() {
+        Options options = new Options();
+        options.protocol = Protocol.SSH_SCP;
+        options.username = "jbond";
+        options.password = "secret";
+        options.allocatePty = false;
+
+        assertFalse(options.toConnectionOptions().<Boolean>get(ALLOCATE_DEFAULT_PTY));
+    }
+
+    @Test
+    public void allocatePtyIsRequiredIfSudoRequiresPass() {
+        Options options = new Options();
+        options.protocol = Protocol.SSH_SUDO;
+        options.username = "jbond";
+        options.password = "secret";
+        options.sudoUsername = "M";
+        options.sudoRequiresPassword = true;
+        options.allocatePty = false;
+
+        assertEquals(1, options.getValidationErrors().size());
     }
 
     @Test
