@@ -24,39 +24,31 @@ repositories {
 	mavenLocal()
 }
 
-task jarWithDeps(type: Jar, dependsOn: classes) {
-	archiveName = "${baseName}.${extension}"
-	mergeDir = "${buildDir}/merge"
-	truezipSpiFile = 'META-INF/services/de.schlichtherle.truezip.fs.spi.FsDriverService'
-	// no inheritance from other projects so no need to be lazy here
-	runtimeDeps = configurations.runtime.collect { zipTree(it) }
+task distribution(type: Zip, dependsOn: jar) {
+  packageDir = 'src/main/package'
 
-	doFirst {
-		new File(mergeDir).delete()
-		mergeFiles(mergeDir, runtimeDeps, truezipSpiFile)
+	into("${baseName}-${version}") {
+		from(packageDir) {
+			exclude 'bin/*.sh'
+		}
+
+		into('bin') {
+			from("${packageDir}/bin") {
+				include '*.sh'
+				fileMode = 0755;
+			}
+		}
+
+		into('lib') {
+			from configurations.runtime
+			// include main artifact - see http://issues.gradle.org/browse/GRADLE-732
+			from "${jar.archivePath}"
+		}
 	}
-
-	// this project's classes and all deps
-	from sourceSets*.classesDir
-	from(runtimeDeps) {
-		exclude 'META-INF/*'
-		exclude truezipSpiFile
-	}
-	from mergeDir
-
-  manifest {
-  	attributes 'Main-Class': 'com.xebialabs.deployit.overthere.ConnectionChecker'
-  }
 }
 
-private def mergeFiles(targetDir, fileTrees, relativePath) {
-  // prepare the merge
-  mergedFile = new File("${targetDir}/${relativePath}")
-  new File(mergedFile.parent).mkdirs()
-
-  fileTrees*.matching({ include "**/${relativePath}" })*.each {
-    mergedFile << it.bytes
-  }
+artifacts {
+  archives distribution
 }
 
 afterEvaluate { eachProject ->

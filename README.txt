@@ -1,14 +1,14 @@
 Description
 ===========
 
-A connection checker to verify Overthere connection settings for remote machines. Debug output is written to a connection-check.log file with settings controlled by a logback.xml file in the JAR, which can be overridden by placing a different logback.xml on the classpath. 
+A connection checker to verify Overthere connection settings for remote machines. Debug output is written to a connection-check.log file with settings controlled by a logback.xml file in the JAR, which can be overridden by placing a different logback.xml in CHECKER_HOME/conf. 
 
 When testing 'sudo' execution while connecting with SSH keys, sudo has to be set up as NOPASSWD or the password option (which isn't mandatory if you're using -keyfile) needs to be set. There's a warning to that effect.
 
 Usage
 =====
 
-java -jar overthere-connection-checker.jar [options...] arguments...
+checker.[sh|cmd] arguments...
  -address VAL                           : The host name or IP address of the
                                           target machine
  -keyfile VAL                           : If using public/private keys, the key
@@ -36,12 +36,12 @@ java -jar overthere-connection-checker.jar [options...] arguments...
 Examples
 ========
 
-*	java -jar overthere-connection-checker.jar -address apache-22 -protocol SSH_SCP -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo
+*	checker.[sh|cmd] -address apache-22 -protocol SSH_SCP -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo
 
-*	java -jar overthere-connection-checker.jar -address apache-22 -protocol SSH_SUDO -username deployit -password deployit
+*	checker.[sh|cmd] -address apache-22 -protocol SSH_SUDO -username deployit -password deployit
 
-*	java -jar overthere-connection-checker.jar -address apache-22 -protocol SSH_SUDO -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo -sudouser groovy 
+*	checker.[sh|cmd] -address apache-22 -protocol SSH_SUDO -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo -sudouser groovy 
 
-NOTE: This will only work with NOPASSWD!
+NOTE: The above will only work with NOPASSWD!
 
-*	java -jar overthere-connection-checker.jar -address apache-22 -protocol SSH_SUDO -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo -sudouser groovy -password deployit
+*	checker.[sh|cmd] -address apache-22 -protocol SSH_SUDO -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo -sudouser groovy -password deployit

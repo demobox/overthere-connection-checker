@@ -21,7 +21,7 @@ import com.xebialabs.deployit.overthere.step.ConnectionCheckStep;
 import com.xebialabs.overthere.ConnectionOptions;
 
 public class ConnectionChecker implements Runnable {
-    private static final String CHECKER_RUN_COMMAND = "java -jar overthere-connection-checker.jar [options...] arguments...";
+    private static final String CHECKER_RUN_COMMAND = "checker.[sh|cmd] arguments...";
 
     private final Logger logger = LoggerFactory.getLogger(ConnectionChecker.class);
     private final String protocol;
