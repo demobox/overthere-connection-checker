@@ -68,8 +68,14 @@ public class Options {
                     errors.add("'-sudouser' is required for SSH_SUDO connections");
                 }
 
-                if (sudoRequiresPassword && !allocatePty) {
-                    errors.add("'-sudo-requires-pass' requires a PTY to be allocated using '-allocate-pty'");
+                if (sudoRequiresPassword) {
+                    if (StringUtils.isEmpty(password)) {
+                        errors.add("'-password' is required if '-sudo-requires-pass' is set");
+                    }
+
+                    if (!allocatePty) {
+                        errors.add("'-sudo-requires-pass' requires a PTY to be allocated using '-allocate-pty'");
+                    }
                 }
             }
         } else {

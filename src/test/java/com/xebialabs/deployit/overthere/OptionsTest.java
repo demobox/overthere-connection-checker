@@ -130,6 +130,18 @@ public class OptionsTest {
     }
 
     @Test
+    public void passwordIsRequiredIfSudoRequiresPass() {
+        Options options = new Options();
+        options.protocol = Protocol.SSH_SUDO;
+        options.username = "jbond";
+        options.keyfile = "/mi6/secret.key";
+        options.sudoUsername = "M";
+        options.sudoRequiresPassword = true;
+
+        assertEquals(1, options.getValidationErrors().size());
+    }
+
+    @Test
     public void allocatePtyArgIsHonoured() {
         Options options = new Options();
         options.protocol = Protocol.SSH_SCP;
