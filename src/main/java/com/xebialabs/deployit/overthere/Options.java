@@ -13,6 +13,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.args4j.Option;
+import org.kohsuke.args4j.spi.FalseSupportingBooleanOptionHandler;
 
 import com.google.common.collect.Sets;
 import com.xebialabs.overthere.ConnectionOptions;
@@ -45,13 +46,13 @@ public class Options {
     @Option(name = "-sudouser", usage = "For connection type SSH_SUDO, the user to use for command execution (sudo -u <user> ...)")
     public String sudoUsername;
 
-    @Option(name = "-sudo-requires-pass", usage = "For connection type SSH_SUDO, specifies whether the invocation of 'sudo -u <user> ...' will prompt for a password that needs to be transmitted")
+    @Option(name = "-sudo-requires-pass", handler = FalseSupportingBooleanOptionHandler.class, usage = "For connection type SSH_SUDO, specifies whether the invocation of 'sudo -u <user> ...' will prompt for a password that needs to be transmitted")
     public boolean sudoRequiresPassword = true;
 
     @Option(name = "-tmpdir", usage = "The temporary directory to use for session work files (default '/tmp' on UNIX, 'C:\\windows\\temp' on Windows)")
     public String temporaryDirectoryLocation;
 
-    @Option(name = "-allocate-pty", usage = "For SSH connections, whether to allocate a PTY when executing a command. Some sudo implementations require this even if no password is required")
+    @Option(name = "-allocate-pty", handler = FalseSupportingBooleanOptionHandler.class, usage = "For SSH connections, whether to allocate a PTY when executing a command. Some sudo implementations require this even if no password is required")
     public boolean allocatePty = true;
 
     Set<String> getValidationErrors() {
@@ -66,6 +67,7 @@ public class Options {
                 if (StringUtils.isEmpty(sudoUsername)) {
                     errors.add("'-sudouser' is required for SSH_SUDO connections");
                 }
+
                 if (sudoRequiresPassword && !allocatePty) {
                     errors.add("'-sudo-requires-pass' requires a PTY to be allocated using '-allocate-pty'");
                 }

@@ -54,6 +54,8 @@ public class OptionsTest {
         options.protocol = Protocol.SSH_SUDO;
         // required for SSH_SUDO
         options.sudoUsername = "jbond";
+        // otherwise results in an additional error
+        options.sudoRequiresPassword = false;
 
         assertEquals(1, options.getValidationErrors().size());
     }
@@ -71,7 +73,7 @@ public class OptionsTest {
     @Test
     public void keyfileArgIsHonoured() {
         Options options = new Options();
-        options.protocol = Protocol.SSH_SUDO;
+        options.protocol = Protocol.SSH_SFTP;
         options.username = "jbond";
         String keyfile = "/mi6/secret.key";
         options.keyfile = keyfile;
@@ -82,7 +84,7 @@ public class OptionsTest {
     @Test
     public void keypassArgIsHonoured() {
         Options options = new Options();
-        options.protocol = Protocol.SSH_SUDO;
+        options.protocol = Protocol.SSH_SFTP;
         options.username = "jbond";
         options.keyfile = "/mi6/secret.key";
         String keypass = "secret";

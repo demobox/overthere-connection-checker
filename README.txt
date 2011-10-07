@@ -11,12 +11,17 @@ Usage
 checker.[sh|cmd] arguments...
  -address VAL                           : The host name or IP address of the
                                           target machine
+ -allocate-pty [VAL]                    : For SSH connections, whether to
+                                          allocate a PTY when executing a
+                                          command. Some sudo implementations
+                                          require this even if no password is
+                                          required
  -keyfile VAL                           : If using public/private keys, the key
                                           file to use to connect to the target
                                           machine
  -keypass VAL                           : The password to use to connect to the
                                           target machine (if not using SSH keys)
- -osType [WINDOWS | UNIX]               : The target operating system type
+ -os-type [WINDOWS | UNIX]              : The target operating system type
                                           (default UNIX)
  -password VAL                          : If not using public/private keys, the
                                           password to use to connect to the
@@ -24,6 +29,11 @@ checker.[sh|cmd] arguments...
  -protocol [CIFS_TELNET | CIFS_WINRM |  : The protocol: only SSH_SCP, SSH_SFTP,
  SSH_SCP | SSH_SFTP | SSH_SUDO]         : SSH_SUDO, CIFS_TELNET, CIFS_WINRM
                                           supported
+ -sudo-requires-pass [VAL]              : For connection type SSH_SUDO,
+                                          specifies whether the invocation of
+                                          'sudo -u <user> ...' will prompt for
+                                          a password that needs to be transmitte
+                                          d
  -sudouser VAL                          : For connection type SSH_SUDO, the
                                           user to use for command execution
                                           (sudo -u <user> ...)
@@ -40,8 +50,11 @@ Examples
 
 *	checker.[sh|cmd] -address apache-22 -protocol SSH_SUDO -username deployit -password deployit
 
-*	checker.[sh|cmd] -address apache-22 -protocol SSH_SUDO -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo -sudouser groovy 
+NOTE: The following two examples will only work with NOPASSWD!
 
-NOTE: The above will only work with NOPASSWD!
+*	checker.[sh|cmd] -address apache-22 -protocol SSH_SUDO -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo -sudouser groovy -sudo-requires-pass false
 
+*	checker.[sh|cmd] -address apache-22 -protocol SSH_SUDO -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo -sudouser groovy -sudo-requires-pass false -allocate-pty false
+
+NOTE: In the following example, '-keyfile' will be used for SSH authentication, '-password' for sudo authentication
 *	checker.[sh|cmd] -address apache-22 -protocol SSH_SUDO -username deployit -keyfile C:/Users/aphillips/.ssh/id_rsa -keypass foo -sudouser groovy -password deployit
