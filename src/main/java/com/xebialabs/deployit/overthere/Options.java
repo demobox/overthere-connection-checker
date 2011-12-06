@@ -25,7 +25,7 @@ public class Options {
     @Option(name = "-os-type", usage = "The target operating system type (default UNIX)")
     public OperatingSystemFamily osType = OperatingSystemFamily.UNIX;
 
-    @Option(name = "-protocol", usage = "The protocol: only SSH_SCP, SSH_SFTP, SSH_SUDO, CIFS_TELNET, CIFS_WINRM supported", required = true)
+    @Option(name = "-protocol", usage = "The protocol: only SSH_SCP, SSH_SFTP, SSH_SUDO, CIFS_TELNET, CIFS_WINRM, CIFS_WINRMS supported", required = true)
     public Protocol protocol;
 
     @Option(name = "-address", usage = "The host name or IP address of the target machine", required = true)
@@ -100,6 +100,8 @@ public class Options {
             }
             options.set(CONNECTION_TYPE, sshType);
             options.set(ALLOCATE_DEFAULT_PTY, allocatePty);
+        } else if (protocol.isCifsConnection()) {
+            options.set(CONNECTION_TYPE, protocol.getCifsType());
         }
 
         if (StringUtils.isNotEmpty(password)) {

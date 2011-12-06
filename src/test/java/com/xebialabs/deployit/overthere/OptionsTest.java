@@ -188,5 +188,4 @@ public class OptionsTest {
         assertEquals(OperatingSystemFamily.UNIX.getDefaultTemporaryDirectoryPath(),
                 options.toConnectionOptions().get(TEMPORARY_DIRECTORY_PATH));
     }
-
 }
