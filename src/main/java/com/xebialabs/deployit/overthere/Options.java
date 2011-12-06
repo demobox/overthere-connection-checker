@@ -40,7 +40,7 @@ public class Options {
     @Option(name = "-keyfile", usage = "If using public/private keys, the key file to use to connect to the target machine")
     public String keyfile;
 
-    @Option(name = "-keypass", usage = "The password to use to connect to the target machine (if not using SSH keys)")
+    @Option(name = "-keypass", usage = "Optionally, the password to use to read the private key file (if using SSH keys)")
     public String keypass;
 
     @Option(name = "-sudouser", usage = "For connection type SSH_SUDO, the user to use for command execution (sudo -u <user> ...)")
