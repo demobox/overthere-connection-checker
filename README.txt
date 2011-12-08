@@ -27,13 +27,12 @@ checker.[sh|cmd] arguments...
                                           password to use to connect to the
                                           target machine
  -protocol [CIFS_TELNET | CIFS_WINRM |  : The protocol: only SSH_SCP, SSH_SFTP,
- SSH_SCP | SSH_SFTP | SSH_SUDO]         : SSH_SUDO, CIFS_TELNET, CIFS_WINRM
-                                          supported
+ CIFS_WINRMS |SSH_SCP | SSH_SFTP |      : SSH_SUDO, CIFS_TELNET, CIFS_WINRM,
+ SSH_SUDO]                              : CIFS_WINRMS supported
  -sudo-requires-pass [VAL]              : For connection type SSH_SUDO,
                                           specifies whether the invocation of
                                           'sudo -u <user> ...' will prompt for
-                                          a password that needs to be transmitte
-                                          d
+                                          a password that needs to be transmitted
  -sudouser VAL                          : For connection type SSH_SUDO, the
                                           user to use for command execution
                                           (sudo -u <user> ...)
