@@ -20,9 +20,11 @@
   <logger name="com.xebialabs.deployit.overthere" level="debug" additivity="false">
     <appender-ref ref="FILE" />
   </logger>
-  <logger name="com.xebialabs.deployit" level="info" />
-  
-	<root level="warn">
+  <logger name="net.schmizz.sshj" level="debug" additivity="false">
+    <appender-ref ref="FILE" />
+  </logger>
+
+	<root level="info">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 	</root>
