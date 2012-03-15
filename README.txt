@@ -8,6 +8,8 @@ When testing 'sudo' execution while connecting with SSH keys, sudo has to be set
 Usage
 =====
 
+Run checker.[sh|cmd] from CHECKER_HOME/bin
+
 checker.[sh|cmd] arguments...
  -address VAL                           : The host name or IP address of the
                                           target machine
